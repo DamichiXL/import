@@ -1,13 +1,13 @@
 {
     "name": "damichixl/import",
-    "description": "Laravel package for importing of large scopes of information",
+    "description": "A Laravel package for importing large amounts of information",
     "type": "package",
     "require": {
         "laravel/framework": "^11.31"
     },
     "autoload": {
         "psr-4": {
-            "Damichixl\\Import\\": "src/"
+            "DamichiXL\\Import\\": "src/"
         }
     },
     "authors": [
@@ -15,5 +15,12 @@
             "name": "Maksym Sliusarchuk",
             "email": "max.slyusarchuk@gmail.com"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+            "providers" : [
+                "DamichiXL\\Import\\Providers\\ImportServiceProvider"
+            ]
+        }
+    }
 }
