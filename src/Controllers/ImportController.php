@@ -1,6 +1,6 @@
 <?php
 
-namespace DamichiXL\Import\controllers;
+namespace DamichiXL\Import\Controllers;
 
 use App\Http\Controllers\Controller;
 

@@ -1,5 +1,5 @@
 <?php
 
-use DamichiXL\Import\controllers\ImportController;
+use DamichiXL\Import\Controllers\ImportController;
 
 Route::post('import', ImportController::class)->name('store');
