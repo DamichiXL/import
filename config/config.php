@@ -1,16 +1,14 @@
 <?php
 
 return [
-    'redirect_url' => '',
     'models' => [
-        //'records' => [
-        //    'name' => 'Records',
-        //    'model' => \App\Models\Record::class,
-        //    'key' => 'id',
-        //    'fields' => [
-        //        'name' => 'Name',
-        //        'type' => 'Type',
+        // 'records' => \DamichiXL\Import\DTO\ImportModel::make(
+        //    name: 'Records',
+        //    model: \App\Models\Record::class,
+        //    key: 'id',
+        //    fields:  [
+        //        \DamichiXL\Import\DTO\ImportField::make(name: 'Name', label: 'Type'),
         //    ],
-        //],
+        // ),
     ],
 ];
