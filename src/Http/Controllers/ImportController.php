@@ -1,8 +1,8 @@
 <?php
 
-namespace DamichiXL\Import\Controllers;
+namespace DamichiXL\Import\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 
 class ImportController extends Controller
 {
