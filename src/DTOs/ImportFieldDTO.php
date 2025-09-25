@@ -5,8 +5,8 @@ namespace DamichiXL\Import\DTOs;
 final readonly class ImportFieldDTO extends BaseDTO
 {
     public function __construct(
-        protected string $name,
-        protected string $label,
+        public string $name,
+        public string $label,
     ) {}
 
     public static function make(...$args): self

@@ -8,10 +8,10 @@ final readonly class ImportModelDTO extends BaseDTO
      * @param  array<string, ImportFieldDTO>  $fields
      */
     public function __construct(
-        protected string $name,
-        protected string $model,
-        protected string $key,
-        protected array $fields,
+        public string $name,
+        public string $model,
+        public string $key,
+        public array $fields,
     ) {}
 
     public static function make(...$args): self

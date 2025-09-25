@@ -14,7 +14,7 @@ class ImportRequest extends FormRequest
             'file' => [
                 'required',
                 'file',
-                'mimes:xlsx,xls',
+                'mimes:csv,txt,xls,xlsx',
             ],
             'model' => [
                 'required',

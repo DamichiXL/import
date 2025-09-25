@@ -3,11 +3,15 @@
 namespace DamichiXL\Import\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Maatwebsite\Excel\ExcelServiceProvider;
 
 class ImportServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Ensure required third-party providers are registered when this package is used standalone (e.g. in tests)
+        $this->app->register(ExcelServiceProvider::class);
+
         $this->mergeConfigFrom(
             __DIR__.'/../../config/config.php', 'import'
         );
