@@ -13,7 +13,7 @@ beforeEach(function () {
         'users' => ImportModelDTO::make(
             name: 'Users',
             model: User::class,
-            key: 'id',
+            key: 'email',
             fields: [
                 ImportFieldDTO::make(name: 'id', label: 'ID'),
                 ImportFieldDTO::make(name: 'name', label: 'Name'),
@@ -102,6 +102,55 @@ describe('Import', function () {
 
     describe('Data', function () {
         it('Successfully stored', function () {
+            // @phpstan-ignore method.notFound
+            $this->postJson(route('store'), [
+                'model' => 'users',
+                'file' => new UploadedFile(
+                    __DIR__.'/../../assets/test.csv',
+                    'test.csv',
+                    'text/csv',
+                    null,
+                    true
+                ),
+                'fields' => [
+                    [
+                        'order' => 0,
+                        'value' => 'email',
+                    ],
+                    [
+                        'order' => 1,
+                        'value' => 'name',
+                    ],
+                    [
+                        'order' => 2,
+                        'value' => 'password',
+                    ],
+                ],
+            ])->assertOk();
+
+            $data = getDataFromCSV(__DIR__.'/../../assets/test.csv');
+
+            foreach ($data as $row) {
+                // @phpstan-ignore method.notFound
+                $this->assertDatabaseHas('users', [
+                    'email' => $row[0],
+                    'name' => $row[1],
+                    'password' => $row[2],
+                ]);
+            }
+        });
+
+        it('Successfully updated', function () {
+            $data = getDataFromCSV(__DIR__.'/../../assets/test.csv');
+
+            foreach ($data as $row) {
+                User::create([
+                    'email' => $row[0],
+                    'name' => fake()->name(),
+                    'password' => fake()->password(),
+                ]);
+            }
+
             // @phpstan-ignore method.notFound
             $this->postJson(route('store'), [
                 'model' => 'users',
