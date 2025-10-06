@@ -26,13 +26,6 @@ class ImportServiceProvider extends ServiceProvider
             'import-config',
         ]);
 
-        $this->publishesMigrations([
-            __DIR__.'/../../database/migrations' => database_path('migrations'),
-        ], [
-            'import',
-            'import-migrations',
-        ]);
-
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../../lang', 'import');
