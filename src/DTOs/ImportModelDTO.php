@@ -2,10 +2,13 @@
 
 namespace DamichiXL\Import\DTOs;
 
+use Illuminate\Database\Eloquent\Model;
+
 final readonly class ImportModelDTO extends BaseDTO
 {
     /**
      * @param  array<string, ImportFieldDTO>  $fields
+     * @param  class-string<Model>  $model
      */
     public function __construct(
         public string $name,

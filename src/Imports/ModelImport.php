@@ -3,29 +3,40 @@
 namespace DamichiXL\Import\Imports;
 
 use DamichiXL\Import\DTOs\ImportModelDTO;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\OnEachRow;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Row;
 
-class ModelImport implements SkipsEmptyRows, ToModel, WithBatchInserts, WithChunkReading, WithStartRow, WithUpserts, WithValidation
+class ModelImport implements OnEachRow, SkipsEmptyRows, WithBatchInserts, WithChunkReading, WithStartRow, WithValidation
 {
     use Importable;
 
     public function __construct(protected ImportModelDTO $configuration, protected array $fields) {}
 
-    public function model(array $row): ?Model
+    public function onRow(Row $row): void
     {
+        $row = $row->toArray();
+
         $model = $this->configuration->model;
 
-        return new $model(
-            $this->getProperties($row)
-        );
+        $properties = $this->getProperties($row);
+
+        if (Arr::has($properties, $this->configuration->key)) {
+            $model::updateOrCreate(
+                [
+                    $this->configuration->key => $properties[$this->configuration->key],
+                ],
+                Arr::except($properties, $this->configuration->key),
+            );
+        } else {
+            $model::create($properties);
+        }
     }
 
     private function getProperties($row): array
@@ -33,11 +44,6 @@ class ModelImport implements SkipsEmptyRows, ToModel, WithBatchInserts, WithChun
         return collect($this->fields)->mapWithKeys(fn ($field) => [
             $field['value'] => $row[$field['order']],
         ])->toArray();
-    }
-
-    public function uniqueBy(): array|string
-    {
-        return $this->configuration->key;
     }
 
     public function batchSize(): int
