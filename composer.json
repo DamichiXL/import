@@ -3,7 +3,7 @@
     "description": "A Laravel package for importing large amounts of information",
     "type": "package",
     "require": {
-        "laravel/framework": "^11.31",
+        "laravel/framework": "^12.0",
         "maatwebsite/excel": "^3.1"
     },
     "autoload": {
@@ -29,7 +29,7 @@
         "pestphp/pest": "^4.0",
         "pestphp/pest-plugin-laravel": "^4.0",
         "pestphp/pest-plugin-faker": "^4.0",
-        "orchestra/testbench": "^9.15",
+        "orchestra/testbench": "^10.0",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.24"
     },
